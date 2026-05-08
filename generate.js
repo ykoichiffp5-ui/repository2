@@ -56,6 +56,7 @@ const html = `
 </head>
 
 <body>
+
   <h1>利用者一覧</h1>
 
   ${cards}
@@ -65,6 +66,7 @@ const html = `
 `;
 
 fs.mkdirSync("dist", { recursive: true });
+
 fs.writeFileSync("dist/index.html", html);
 
 console.log("HTML生成完了");
