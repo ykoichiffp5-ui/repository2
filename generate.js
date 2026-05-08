@@ -10,19 +10,6 @@ if (!raw) {
 const data = JSON.parse(raw);
 const issues = data.data.issues.nodes;
 
-// 利用者A を除外
-const filteredIssues = issues.filter(
-  issue => issue.title !== "利用者A"
-);
-
-// 表示したいデータだけ
-const residentIssues = filteredIssues.filter(
-  issue =>
-    issue.title.includes("階人数") ||
-    issue.title.includes("入院者数") ||
-    issue.title.includes("合計人数")
-);
-
 const html = `
 <!DOCTYPE html>
 <html lang="ja">
@@ -101,14 +88,14 @@ const html = `
 
     <div class="top-card">
       <h3>利用者人数</h3>
-      <p>${residentIssues.length}人</p>
+      <p>${issues.length}人</p>
     </div>
 
     <div class="top-card">
       <h3>完了件数</h3>
       <p>
         ${
-          filteredIssues.filter(
+          issues.filter(
             issue => issue.state.name === "Done"
           ).length
         }件
@@ -119,7 +106,7 @@ const html = `
 
   <h2>利用者一覧</h2>
 
-  ${residentIssues.map(issue => `
+  ${issues.map(issue => `
     <div class="card">
       <h3>${issue.title}</h3>
 
