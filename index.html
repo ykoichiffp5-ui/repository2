@@ -7,169 +7,59 @@
 
   <style>
     body {
-      margin: 0;
-      padding: 40px;
       font-family: sans-serif;
       background: #f3f3f3;
+      padding: 30px;
     }
 
     h1 {
-      font-size: 64px;
-      margin-bottom: 40px;
-    }
-
-    .top {
-      display: flex;
-      gap: 24px;
+      font-size: 48px;
       margin-bottom: 40px;
     }
 
     .card {
-      flex: 1;
       background: white;
       border-radius: 20px;
-      padding: 32px;
+      padding: 30px;
+      margin-bottom: 25px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .label {
-      font-size: 20px;
-      color: #666;
+    .card h2 {
+      font-size: 32px;
       margin-bottom: 20px;
     }
 
-    .big {
-      font-size: 72px;
-      font-weight: bold;
-    }
-
-    h2 {
-      margin-bottom: 24px;
-    }
-
-    .user-card {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .user-name {
+    .card p {
       font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    .status {
-      color: #666;
-    }
-
-    .badge {
-      padding: 8px 16px;
-      border-radius: 999px;
-      font-weight: bold;
-    }
-
-    .todo {
-      background: #fff3cd;
-      color: #856404;
-    }
-
-    .done {
-      background: #d4edda;
-      color: #155724;
     }
   </style>
 </head>
 
 <body>
+  <h1>利用者一覧</h1>
 
-  <h1>📊 介護ダッシュボード</h1>
-
-  <div class="top">
-    <div class="card">
-      <div class="label">利用者人数</div>
-      <div class="big">5人</div>
-    </div>
-
-    <div class="card">
-      <div class="label">完了件数</div>
-      <div class="big">0件</div>
-    </div>
+  
+  <div class="card">
+    <h2>合計人数</h2>
+    <p>状態: Todo</p>
   </div>
 
-  <h2>一覧</h2>
+  <div class="card">
+    <h2>４階人数</h2>
+    <p>状態: Todo</p>
+  </div>
 
-  
-    <div class="user-card">
-      <div>
-        <div class="user-name">合計人数</div>
-        <div class="status">
-          状態: Todo
-        </div>
-      </div>
+  <div class="card">
+    <h2>３階人数</h2>
+    <p>状態: Todo</p>
+  </div>
 
-      <div class="badge todo">
-        Todo
-      </div>
-    </div>
-  
-    <div class="user-card">
-      <div>
-        <div class="user-name">入院者数</div>
-        <div class="status">
-          状態: Todo
-        </div>
-      </div>
+  <div class="card">
+    <h2>2階人数</h2>
+    <p>状態: Todo</p>
+  </div>
 
-      <div class="badge todo">
-        Todo
-      </div>
-    </div>
-  
-    <div class="user-card">
-      <div>
-        <div class="user-name">４階人数</div>
-        <div class="status">
-          状態: Todo
-        </div>
-      </div>
-
-      <div class="badge todo">
-        Todo
-      </div>
-    </div>
-  
-    <div class="user-card">
-      <div>
-        <div class="user-name">３階人数</div>
-        <div class="status">
-          状態: Todo
-        </div>
-      </div>
-
-      <div class="badge todo">
-        Todo
-      </div>
-    </div>
-  
-    <div class="user-card">
-      <div>
-        <div class="user-name">2階人数</div>
-        <div class="status">
-          状態: Todo
-        </div>
-      </div>
-
-      <div class="badge todo">
-        Todo
-      </div>
-    </div>
-  
 
 </body>
 </html>
