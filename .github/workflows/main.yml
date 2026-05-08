@@ -34,6 +34,9 @@ jobs:
             }"
           }' > linear-data.json
 
+      - name: Debug
+        run: cat linear-data.json
+
       - name: Generate HTML
         run: node generate.js
 
