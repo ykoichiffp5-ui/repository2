@@ -21,18 +21,8 @@ jobs:
           curl -X POST https://api.linear.app/graphql \
           -H "Content-Type: application/json" \
           -H "Authorization: $LINEAR_API_KEY" \
-          -d '{
-            "query":"{
-              issues(first:20){
-                nodes{
-                  title
-                  state{
-                    name
-                  }
-                }
-              }
-            }"
-          }' > linear-data.json
+          --data '{"query":"{ issues(first:20){ nodes{ title state{ name } } } }"}' \
+          > linear-data.json
 
       - name: Debug
         run: cat linear-data.json
