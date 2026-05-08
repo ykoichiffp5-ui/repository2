@@ -8,115 +8,154 @@ if (!raw) {
 }
 
 const data = JSON.parse(raw);
-
 const issues = data.data.issues.nodes;
 
-const doneCount = issues.filter(
-  (issue) => issue.state.name === "Done"
+// 利用者Aを除外
+const filteredIssues = issues.filter(
+  issue => issue.title !== "利用者A"
+);
+
+// 人数
+const userCount = filteredIssues.length;
+
+// 完了件数
+const doneCount = filteredIssues.filter(
+  issue => issue.state.name === "Done"
 ).length;
 
-const userCount = issues.filter(
-  (issue) => issue.title.includes("利用者")
-).length;
+// 一覧HTML
+const userList = filteredIssues.map(issue => {
+  const isDone = issue.state.name === "Done";
 
-const userList = issues
-  .map(
-    (issue) => `
-      <div class="user-card">
-        <h3>${issue.title}</h3>
-        <p>状態: ${issue.state.name}</p>
+  return `
+    <div class="user-card">
+      <div>
+        <div class="user-name">${issue.title}</div>
+        <div class="status">
+          状態: ${issue.state.name}
+        </div>
       </div>
-    `
-  )
-  .join("");
+
+      <div class="badge ${isDone ? "done" : "todo"}">
+        ${isDone ? "Done" : "Todo"}
+      </div>
+    </div>
+  `;
+}).join("");
 
 const html = `
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<title>介護ダッシュボード</title>
+  <meta charset="UTF-8">
+  <title>介護ダッシュボード</title>
 
-<style>
-body{
-  font-family:sans-serif;
-  background:#f3f3f3;
-  padding:40px;
-}
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: sans-serif;
+      background: #f3f3f3;
+    }
 
-h1{
-  font-size:64px;
-}
+    h1 {
+      font-size: 64px;
+      margin-bottom: 40px;
+    }
 
-.cards{
-  display:flex;
-  gap:20px;
-  margin-bottom:40px;
-}
+    .top {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
 
-.card{
-  background:white;
-  border-radius:20px;
-  padding:30px;
-  flex:1;
-  box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
+    .card {
+      flex: 1;
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
 
-.number{
-  font-size:96px;
-  font-weight:bold;
-}
+    .label {
+      font-size: 20px;
+      color: #666;
+      margin-bottom: 20px;
+    }
 
-.user-list{
-  margin-top:30px;
-}
+    .big {
+      font-size: 72px;
+      font-weight: bold;
+    }
 
-.user-card{
-  background:white;
-  padding:20px;
-  border-radius:16px;
-  margin-bottom:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.08);
-}
+    h2 {
+      margin-bottom: 24px;
+    }
 
-.user-card h3{
-  margin:0 0 10px 0;
-  font-size:28px;
-}
-</style>
+    .user-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .user-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .status {
+      color: #666;
+    }
+
+    .badge {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+    }
+
+    .todo {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .done {
+      background: #d4edda;
+      color: #155724;
+    }
+  </style>
 </head>
 
 <body>
 
-<h1>📊 介護ダッシュボード</h1>
+  <h1>📊 介護ダッシュボード</h1>
 
-<div class="cards">
+  <div class="top">
+    <div class="card">
+      <div class="label">利用者人数</div>
+      <div class="big">${userCount}人</div>
+    </div>
 
-  <div class="card">
-    <h2>利用者人数</h2>
-    <div class="number">${userCount}人</div>
+    <div class="card">
+      <div class="label">完了件数</div>
+      <div class="big">${doneCount}件</div>
+    </div>
   </div>
 
-  <div class="card">
-    <h2>完了件数</h2>
-    <div class="number">${doneCount}件</div>
-  </div>
-
-</div>
-
-<div class="user-list">
-  <h2>利用者一覧</h2>
+  <h2>一覧</h2>
 
   ${userList}
-
-</div>
 
 </body>
 </html>
 `;
 
 fs.mkdirSync("dist", { recursive: true });
-
 fs.writeFileSync("dist/index.html", html);
 
-console.log("HTML generated!");
+console.log("HTML生成完了");
