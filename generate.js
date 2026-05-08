@@ -4,12 +4,14 @@ const raw = fs.readFileSync("linear-data.json", "utf8");
 
 const data = JSON.parse(raw);
 
-const issues = data.data.issues.nodes;
+console.log(data);
+
+const issues = data?.data?.issues?.nodes || [];
 
 const totalUsers = issues.length;
 
 const doneCount = issues.filter(
-  issue => issue.state.name === "Done"
+  issue => issue.state?.name === "Done"
 ).length;
 
 const html = `
