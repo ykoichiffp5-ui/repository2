@@ -1,62 +1,61 @@
 const fs = require("fs");
 
 const raw = fs.readFileSync("linear-data.json", "utf8");
-
 const data = JSON.parse(raw);
 
-console.log(data);
+const issues = data.data.issues.nodes;
 
-const issues = data?.data?.issues?.nodes || [];
+const userCount = issues.filter(issue =>
+  issue.title.includes("利用者")
+).length;
 
-const totalUsers = issues.length;
-
-const doneCount = issues.filter(
-  issue => issue.state?.name === "Done"
+const doneCount = issues.filter(issue =>
+  issue.state.name === "Done"
 ).length;
 
 const html = `
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>介護ダッシュボード</title>
+<meta charset="UTF-8">
+<title>介護ダッシュボード</title>
 
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      padding: 40px;
-    }
+<style>
+body{
+  font-family:sans-serif;
+  background:#f3f3f3;
+  padding:40px;
+}
 
-    h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
+h1{
+  font-size:64px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+  margin-top:40px;
+}
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
+.card{
+  background:white;
+  border-radius:30px;
+  padding:40px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
 
-    .label {
-      font-size: 24px;
-      color: #666;
-      margin-bottom: 10px;
-    }
+.label{
+  font-size:32px;
+  color:#666;
+}
 
-    .value {
-      font-size: 64px;
-      font-weight: bold;
-    }
-  </style>
+.value{
+  font-size:96px;
+  font-weight:bold;
+  margin-top:20px;
+}
+</style>
 </head>
 
 <body>
@@ -67,7 +66,7 @@ const html = `
 
   <div class="card">
     <div class="label">利用者人数</div>
-    <div class="value">${totalUsers}人</div>
+    <div class="value">${userCount}人</div>
   </div>
 
   <div class="card">
@@ -85,4 +84,4 @@ fs.mkdirSync("dist", { recursive: true });
 
 fs.writeFileSync("dist/index.html", html);
 
-console.log("done");
+console.log("dashboard generated");
