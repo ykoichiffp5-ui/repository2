@@ -4,13 +4,62 @@
 <head>
   <meta charset="UTF-8">
   <title>介護ダッシュボード</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f5f5f5;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .label {
+      font-size: 24px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 64px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
-<body style="font-family:sans-serif;padding:40px;">
+<body>
 
 <h1>📊 介護ダッシュボード</h1>
 
-<h2>利用者人数: 5人</h2>
+<div class="grid">
+
+  <div class="card">
+    <div class="label">利用者人数</div>
+    <div class="value">0人</div>
+  </div>
+
+  <div class="card">
+    <div class="label">完了件数</div>
+    <div class="value">0件</div>
+  </div>
+
+</div>
 
 </body>
 </html>
