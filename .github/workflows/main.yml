@@ -1,38 +1,46 @@
 name: Dashboard
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      - name: Install packages
+        run: npm install
+
       - name: Fetch Linear Data
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
         run: |
           curl -X POST https://api.linear.app/graphql \
-          -H "Authorization: ${{ secrets.LINEAR_API_KEY }}" \
           -H "Content-Type: application/json" \
-          -d '{"query":"{ issues(first: 20) { nodes { title state { name } } } }"}' \
+          -H "Authorization: $LINEAR_API_KEY" \
+          --data '{"query":"{ issues(first:20){ nodes{ title state{ name } } } }"}' \
           > linear-data.json
 
           echo "LINEAR_DATA<<EOF" >> $GITHUB_ENV
           cat linear-data.json >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Debug
-        run: cat linear-data.json
-
       - name: Generate HTML
         run: node generate.js
+
+      - name: Send Mail
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        run: node sendMail.js
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
